@@ -40,4 +40,18 @@ public class Board {
         }
         return moves;
     }
+
+    public void printBoard() {
+        System.out.println("Current Board:");
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                if (grid[i][j] == null) {
+                    System.out.print(" . ");
+                } else {
+                    System.out.printf("%02d  ", grid[i][j].attributes); // Print piece ID
+                }
+            }
+            System.out.println();
+        }
+    }
 }
