@@ -48,7 +48,7 @@ public class Board {
                 if (grid[i][j] == null) {
                     System.out.print(" . ");
                 } else {
-                    System.out.printf("%02d  ", grid[i][j].attributes); // Print piece ID
+                    System.out.printf("%02d  ", grid[i][j].attributes);
                 }
             }
             System.out.println();
