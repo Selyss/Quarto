@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Engine {
+
     private Board cloneBoard(Board board) {
         Board newBoard = new Board();
         for (int i = 0; i < 4; i++) {
@@ -33,6 +34,10 @@ public class Engine {
 
     private int evaluate(Board board, int player) {
 //        if (board.isWinningState()) return player * 1000; // TODO: implement
+        // NOTE: implement eval if the move would win
+        if (board.checkLine(board.grid[0][0], board.grid[1][1], board.grid[2][2], board.grid[3][3])) {
+            return 1000 * player;
+        }
 
         int score = 0;
         for (int i = 0; i < 4; i++) {
