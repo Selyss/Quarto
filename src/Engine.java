@@ -1,8 +1,6 @@
 import java.util.ArrayList;
 
 public class Engine {
-    private static final int MAX_DEPTH = 3;
-
     private Board cloneBoard(Board board) {
         Board newBoard = new Board();
         for (int i = 0; i < 4; i++) {
@@ -61,7 +59,7 @@ public class Engine {
             for (Piece piece : board.availablePieces) {
                 Board simulatedBoard = cloneBoard(board);
                 simulatedBoard.grid[move[0]][move[1]] = piece;
-                int score = -negamax(simulatedBoard, -Integer.MAX_VALUE, Integer.MAX_VALUE, -1, MAX_DEPTH);
+                int score = -negamax(simulatedBoard, -Integer.MAX_VALUE, Integer.MAX_VALUE, -1, getDynamicDepth(simulatedBoard));
                 if (score > bestScore) {
                     bestScore = score;
                     bestMove = move;
@@ -69,5 +67,12 @@ public class Engine {
             }
         }
         return bestMove;
+    }
+
+    private int getDynamicDepth(Board board) {
+        int remainingMoves = board.getAvailableMoves().size();
+        if (remainingMoves > 10) return 3;
+        if (remainingMoves > 6) return 4;
+        return 5;
     }
 }
