@@ -13,11 +13,11 @@ public class Main {
             board.printBoard();
 
             if (playerTurn) {
-                System.out.println("Enter row and column (0-3) seperated by space:");
+                System.out.print("Enter row and column (0-3) seperated by space:");
                 int row = in.nextInt();
                 int col = in.nextInt();
 
-                System.out.println("Choose a piece (0-15):");
+                System.out.print("Choose a piece (0-15):");
                 int pieceId = in.nextInt();
 
                 Piece piece = new Piece(pieceId);

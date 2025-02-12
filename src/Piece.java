@@ -7,10 +7,12 @@ public class Piece {
 
     public Piece(int attributes) {
         this.attributes = attributes;
+        System.out.println("Piece created with attributes: " + Integer.toBinaryString(attributes));
+
     }
 
     public boolean isTall() { return (attributes & 0b1000) != 0; }  // 2nd bit: 1 = tall, 0 = short
-    public boolean isBlack() { return (attributes & 0b0100) == 0; }  // 1st bit: 1 = white, 0 = black
+    public boolean isBlack() { return (attributes & 0b0100) != 0; }  // 1st bit: 1 = white, 0 = black
     public boolean hasHole() { return (attributes & 0b0010) != 0; } // 4th bit: 1 = hole, 0 = solid
     public boolean isRound() { return (attributes & 0b0001) != 0; } // 3rd bit: 1 = round, 0 = square
 

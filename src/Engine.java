@@ -58,17 +58,6 @@ public class Engine {
     }
 
 
-    private int countPotentialLines(Board board, int index, int player) {
-        int score = 0;
-        if (board.checkLine(board.grid[index][0], board.grid[index][1], board.grid[index][2], board.grid[index][3])) {
-            score += 10;
-        }
-        if (board.checkLine(board.grid[0][index], board.grid[1][index], board.grid[2][index], board.grid[3][index])) {
-            score += 10;
-        }
-        return score * player;
-    }
-
     public int[] getBestMove(Board board) {
         int bestScore = Integer.MIN_VALUE;
         int[] bestMove = null;
