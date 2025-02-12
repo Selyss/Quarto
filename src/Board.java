@@ -11,7 +11,6 @@ public class Board {
         }
     }
 
-
     boolean checkLine(Piece a, Piece b, Piece c, Piece d) {
         if (a == null || b == null || c == null || d == null) return false;
         return (a.attributes & b.attributes & c.attributes & d.attributes) != 0;
@@ -43,16 +42,18 @@ public class Board {
     }
 
     public void printBoard() {
-        System.out.println("Current Board:");
+        System.out.println("\n  0  1  2  3"); // Column numbers for reference
         for (int i = 0; i < 4; i++) {
+            System.out.print(i + " "); // Row number for reference
             for (int j = 0; j < 4; j++) {
                 if (grid[i][j] == null) {
-                    System.out.print(" . ");
+                    System.out.print(" .  "); // Empty space representation
                 } else {
-                    System.out.printf("%02d  ", grid[i][j].attributes);
+                    System.out.print(grid[i][j].getFormattedPiece() + " ");
                 }
             }
-            System.out.println();
+            System.out.println(); // Move to next row
         }
+        System.out.println();
     }
 }
