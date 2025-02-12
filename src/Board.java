@@ -11,7 +11,7 @@ public class Board {
         }
     }
 
-    private boolean checkLine(Piece a, Piece b, Piece c, Piece d) {
+    boolean checkLine(Piece a, Piece b, Piece c, Piece d) {
         if (a == null || b == null || c == null || d == null) return false;
         return (a.attributes & b.attributes & c.attributes & d.attributes) != 0;
     }
