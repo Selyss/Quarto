@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Engine {
     private Board cloneBoard(Board board) {
@@ -16,7 +17,7 @@ public class Engine {
         }
 
         int best = Integer.MIN_VALUE;
-        for (int[] move : board.getAvailableMoves()) {
+        for (int[] move : getOrderedMoves(board)) {
             for (Piece piece : board.availablePieces) {
                 Board simulatedBoard = cloneBoard(board);
                 simulatedBoard.grid[move[0]][move[1]] = piece;
@@ -31,17 +32,28 @@ public class Engine {
     }
 
     private int evaluate(Board board, int player) {
-        // Basic heuristic: count potential winning lines for the player
+//        if (board.isWinningState()) return player * 1000; // TODO: implement
+
         int score = 0;
         for (int i = 0; i < 4; i++) {
-            score += countPotentialLines(board, i, player);
+            score += countThreats(board, i, player);
         }
         return score;
     }
 
+    private int countThreats(Board board, int index, int player) {
+        int score = 0;
+        if (board.checkLine(board.grid[index][0], board.grid[index][1], board.grid[index][2], board.grid[index][3])) {
+            score += 50; // good line
+        }
+        if (board.checkLine(board.grid[0][index], board.grid[1][index], board.grid[2][index], board.grid[3][index])) {
+            score += 50;
+        }
+        return score * player;
+    }
+
 
     private int countPotentialLines(Board board, int index, int player) {
-        // Simple scoring system (more sophisticated evaluation can be added)
         int score = 0;
         if (board.checkLine(board.grid[index][0], board.grid[index][1], board.grid[index][2], board.grid[index][3])) {
             score += 10;
@@ -53,13 +65,16 @@ public class Engine {
     }
 
     public int[] getBestMove(Board board) {
-        int[] bestMove = null;
         int bestScore = Integer.MIN_VALUE;
+        int[] bestMove = null;
+        int depth = getDynamicDepth(board);
+
         for (int[] move : board.getAvailableMoves()) {
             for (Piece piece : board.availablePieces) {
                 Board simulatedBoard = cloneBoard(board);
                 simulatedBoard.grid[move[0]][move[1]] = piece;
-                int score = -negamax(simulatedBoard, -Integer.MAX_VALUE, Integer.MAX_VALUE, -1, getDynamicDepth(simulatedBoard));
+
+                int score = -negamax(simulatedBoard, -Integer.MAX_VALUE, Integer.MAX_VALUE, -1, depth);
                 if (score > bestScore) {
                     bestScore = score;
                     bestMove = move;
@@ -75,4 +90,15 @@ public class Engine {
         if (remainingMoves > 6) return 4;
         return 5;
     }
+
+    private List<int[]> getOrderedMoves(Board board) {
+        List<int[]> moves = board.getAvailableMoves();
+        moves.sort((a, b) -> evaluateMove(b) - evaluateMove(a));
+        return moves;
+    }
+
+    private int evaluateMove(int[] move) {
+        return (move[0] == 1 || move[0] == 2) && (move[1] == 1 || move[1] == 2) ? 10 : 5; // prioritize center moves
+    }
+
 }
